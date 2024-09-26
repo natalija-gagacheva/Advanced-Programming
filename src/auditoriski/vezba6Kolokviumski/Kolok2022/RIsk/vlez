@@ -1,0 +1,25 @@
+5   3  4;2  4   1
+x1 x2 x3;y1 y2 y3
+
+result: 1
+
+x1 x2 x3 broevi dobieni so frlanje na 3 kocki (broj 1-6) na napagjachot
+y1 y2 y3 broevi dobieni so frlanje na 3 kocki (broj 1-6) za odbrana
+
+Eden napad e uspeshen dokolku ***site*** kocki frleni od napagjachot
+imaat pogolem broj od brojot na frlenite kocki na napadnatiot
+
+Input:
+5 3 4;2 5 1
+
+result: 0
+
+Input:
+4 4 3;6 3 6
+2 5 3;1 1 4
+2 3 3;2 5 3
+3 5 5;1 1 4
+5 4 4;3 5 1
+
+result: 2
+

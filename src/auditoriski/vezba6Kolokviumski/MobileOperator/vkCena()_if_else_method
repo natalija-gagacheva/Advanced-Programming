@@ -1,0 +1,65 @@
+class SCustomer extends Customer {
+
+    //Dokolku edna promenliva e ista za sekoja instanca od taa klasa, istata promenliva treba da bide STATIC
+    static int BASE_PRICE_S = 500;
+
+    //besplatnite sms,gb, minuti se isti za sekoj Customer_S, t.s i tie ke se static
+    static int FREE_MINUTES_S=100;
+    static int FREE_SMS_S = 50;
+    static int FREE_GB_S = 5;
+
+    /* za sekoe nadminuvanje nad dozvolenoto, ima fiknso pokacuvanje
+    sho e static za sekoja instanca od ovaa klasa */
+    static int PRICE_PER_MINUTES_S = 5;
+    static int PRICE_PER_SMS_S = 6;
+    static int PRICE_PER_BG_S = 25;
+
+    //vo konstruktorot nema da ja prakjame osnovnata cena, bidejki
+    //taa e ista za site S_customers, t.s nema poenta da se menva pri kreiranje na nov objekt
+    public SCustomer(int minutes, int SMS, float GB) {
+        super(minutes, SMS, GB);
+    }
+
+    //Za sekoj customer treba da presmetame kolku nadminal nad dozvolenoto
+    @Override
+    double vkCena() {
+        double vkupnaCena = BASE_PRICE_S;
+
+        if (minutes > FREE_MINUTES_S ) {
+            //dokolku brojot na minuti gi nadminuva dozvolenite besplatni minuti
+
+            vkupnaCena = vkupnaCena + (PRICE_PER_MINUTES_S * (minutes - FREE_MINUTES_S));
+            /*vkupnata cena ke bide vkCena + costPerMinute * (brojot na minuti - besplatni dozvoleni minuti)
+            so cel da se doznae kolku minuti ima nadminato nad dozvolenoto, pr:
+            500 = 500 + ( 5 * ( 264 - 100)) */
+        }
+
+        if (SMS > FREE_SMS_S ) {
+            vkupnaCena = vkupnaCena + (PRICE_PER_SMS_S * (SMS - FREE_SMS_S));
+        }
+
+        if (GB > FREE_GB_S ) {
+            vkupnaCena = vkupnaCena + (PRICE_PER_BG_S * (GB - FREE_GB_S));
+        }
+
+        return vkupnaCena;
+
+    }
+
+
+    @Override
+    public void setMinutes(int minutes) {
+        super.setMinutes(100);
+    }
+
+    @Override
+    public void setGB(float GB) {
+        super.setGB(5);
+    }
+
+    @Override
+    public void setSMS(int SMS) {
+        super.setSMS(50);
+    }
+
+}

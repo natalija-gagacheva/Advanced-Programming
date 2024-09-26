@@ -1,0 +1,1049 @@
+EVERYTHING I LEARNED:
+
+Vezba 3 - Bank
+1. postavuvanje na sekvencijalen counter
+   ---> can be used also as: kolku objekti se instancirani od edna klasa
+2. ABSTRACT ni ukazhuva deka nema da mozhime da kreirame direktni instanci od taa klasa
+            i mora da imame eden abstrakten metod za da se klasificira kako abstrakna klasa
+3. creating a constant with static final variables
+4. Funkcii so nizi koristejki Arrays.
+    //if (totalAccounts == maxAccounts) {
+                  //stariot pokazhuvach na account pomesti go kon novata niza sho se kreira
+                  accountsNiza = Arrays.copyOf(accountsNiza, maxAccounts*2);  //vrakja niza
+              }
+Collections klasata ovozmozhuva manpulacija so listi (listata e kolekcija)
+5. Proverka dali daden objekt e instanca od dadena klasa/interface
+    Objekti se kreiraat ISKLUCHIVO od klasa, NE MOZHI od interface
+6. Koristenje na "instanceOf" e BAD PRACTICE i mozhi da ni namali poeni na kol
+
+Vezba 3 - Calculator
+1. Strategy Design Pattern se koristi koga imame presmetki od razlichen tip no mozhe da se piknat pod ista kapa
+2. Fakjanje iskluchok vo Main - najchesto koga metodot frla iskluchok, treba da go fatime onamu od kade shto go povikavme metodot
+   LOSHA PRAKSA e da go frlime iskluchokot i da go fatime na istoto mesto ako e od ist tip
+vo TRY BLOCK odi povikot na metodot kojshto frla iskluchok
+vo CATCH BLOCK kazhuva kakov iskluchok se fakja i pechati poraka ili pravi nesto dr
+3. Pravilno chitanje od stdin
+   Prv karakter od String turned to lower case - Funkcija
+   Parsing na string kon drug tip na podatok
+
+Vezba 3 - lambda
+1. Funkciski Interface - interface kojshto ima samo eden metod koj mozhi no ne mora da vrakja vrednost
+                       - ako vrakja vrednost, i implementacijata MORA da vrati vrednost
+   Anonimnata klasa - kreirame i instancirame vo ist moment, za 1 upotreba
+                    - se koristi koga imame interface koi ne e funkciski, t.e ima poke od 1 metod
+                    - mora da implementira nekoj interface
+                    - mora da se napravi Override na sekoj metod na toj interface vo anonimnata klasa
+2. Lambda izrazi - se koristat so cel da ne koristime Anonimni klasi
+                 - se koristat vo sluchaj koga imame funkciski interface radi sho ima samo 1 metod
+   FunctionalInterface simpleBody = (x,y) -> x * y;
+
+Vezba 4 - ListArray
+1. Functional interfaces definirani vo Java: Predicate, Supplier, Consumer (Method reference), Function, BiFunction
+   Predicate - funksicki interface koj prima eden argument i vrakja boolean vrednost
+            - se koristi koga sakame da napravime nekakvo filtriranje spored nekoj uslov
+PRIMER: System.out.println(integerLista.removeIf(i -> i > 5));
+za ovoj primer, dokolku vrednosta e true, izbrishi go elementot, dokolku e false chuvaj go
+
+2. Stream i terminalni akcii
+
+Vezba 4 - WordCount
+1. Rabota so klasata File, citanje na File
+2. InputStreams
+3. Citanje so Scanner, Buffered reader, BufferedReaderMapAndReduce, Consumer
+4. linija.split("\\s+") --- edno ili povekje prazni mesta
+   linija.split("\\s") --- bez plusot oznacuva edno prazno mesto
+
+
+Vezba 4 - OcenkiZaKurs
+1. Kratenje poeni ako cuvame lista (za taa specificna situacija vo klasata CourseKlasa) !!!!!!!!!!
+2. Mapiranje .map() preku metod, namesto preku konstruktor
+3. Razlicni nacini na pecatenje podatoci (printData)
+4. .flush() i .close() za da se ispechati se sho sme pishele vo metodite za pecatenje
+5. pecatenje so objekt od PrintWriter
+6. Citanje od bilo kakov InputStream bez razlika dali e od File ili Tastatura (taka ke se bara na polaganje)
+
+Vezba 4 - 2023/24
+1. Anonimnite klasi mozhat da bidat zameneti so lambda izrazi
+   AKO I SAMO AKO IMAME TOCNO EDEN METOD VO INTERFACE-OT KADE SHTO SAKAME DA KREIRAME LAMBDA IZRAZI
+2. Kastiranje na promenlivite int result= (float)a/b;
+3. Functional interface - interface koi ima tocno eden metod i od koj mozheme da napisheme lambda izraz
+
+Vezba 6 - File
+1. .anyMatch(name -> name.equals(nameOfFile));
+filesLista.stream()
+                .map((IFileInterface file) -> file.getFileName())
+                .anyMatch(name -> name.equals(nameOfFile));
+
+Dali za nekoj file od stream-ot ima match so predikatot, dokolku to e tocno vrati True
+odnosno go zemame stram-ot, za sekoj eden file shto go imame vo FilesList, go zemame imeto negovo
+i za sekoj eden file proveruvame dali e ednakov so imeto vo predikatot
+
+2. In Java, you can declare variables of an interface type.
+This allows you to refer to objects that implement that interface.
+
+3. Spojuvanje na poveke stringovi vo eden string so ".collect(Collectors.joining()) "
+class IndentPrinter {
+
+    //ako ispratime kako argument 4, ke ni spoi 4 tabovi kako stringovi, 4 tab spaces
+    public static String printIndentation (int brTabs) { //brTabs se kolku indentacii ke treba da se ispechatat
+        return IntStream.range(0, brTabs) //creates a stream of integers from 0 to brTabs-1
+                .mapToObj(i -> "\t") //maps each integer of the stream into a String object representing a tab
+                .collect(Collectors.joining()); //spojuva poke stringovi vo eden so prazno mesto izmegju
+    }
+}
+ @Override
+    public String getFileInfo(int indent) {
+        return String.format("%sFile name: %10s File size: %10d\n", //pecatenje so prostor od 10
+                IndentPrinter.printIndentation(indent), getFileName(), getFileSize());
+    }
+4. Sekogas se pravi sporedba so istiot tip na klasa/interface
+interface IFileInterface extends Comparable<IFileInterface> {}
+
+5. Comparable vs Comparator
+-> .compareTo metodot od klasata Comparable go sporedva momentalniot objekt so drug objekt,
+    najcesto preku specifichen metod ili variable (int, long, char)
+
+    public int compareTo(Linija o) {
+            return Integer.compare(this.brPojavuvanja(), o.brPojavuvanja());
+    }
+
+    public int compareTo(DummyLog o) {
+            return Long.compare(this.getTimestamp(), o.getTimestamp());
+    }
+
+
+    public int compareTo(StudentKlasa o) {
+            return Character.compare(this.ocenka, o.ocenka);
+    }
+
+-> Comparator e objekt kojshto mozi da sporedi 2 razlicni objekti od edna klasa
+   (najcesto se koristi za sorted)
+
+Examples:
+ @Override
+    public void SortBySize() {
+        // Step 1: Create a Comparator to compare file sizes
+        Comparator<IFileInterface> comparator = Comparator.comparingLong(iFileInterface -> iFileInterface.getFileSize());
+
+        // Step 2: Sort the filesLista using the comparator
+        filesLista.sort(comparator);
+
+        // Step 3: Call SortBySize on each file in filesLista
+        filesLista.forEach(( IFileInterface edenFile) -> edenFile.SortBySize());
+    }
+
+Vezba 6 -CakeShopApplication
+1. Koga treba da pretvarame od String vo objekt od nekoja klasa, mozheme da:
+.kreirame konstruktor koj prima string kako argument
+    public Naracki (String linija) { }
+    br.lines().map(linija -> new Naracki(linija))
+
+.kreirame STATIC metod koj ke go vrakja objektot od klasata
+    public static Naracki createOrder(String linija) { }
+    br.lines().map(linija -> Naracki.createOrder(linija))
+
+
+2. Koga treba da rabotime so niza preku stream i za so sekoj element da napravime nekoja logika
+   Koga treba nekoja linija procitana od inputstream da ja podelime vo poke objekti
+    Arrays.stream(niza) //niza e niza od elementi
+                .skip(0)//thats the id
+                .forEach(edenElementOdNiza -> {
+                    //pravime proverka dali e itemName ili itemPrice
+                    if (Character.isAlphabetic(edenElementOdNiza.charAt(0))) {
+                        String imeNaNaracka = edenElementOdNiza;
+                        ednaNaracka.add(new Item(imeNaNaracka));
+                    } else {
+                        int cenaNaNaracka = Integer.parseInt(edenElementOdNiza);
+                        ednaNaracka.get(ednaNaracka.size()-1).setItemPrice(cenaNaNaracka);
+                    }
+                }
+                );
+
+3. Proverka dali stringot e karakter
+   if(Character.isAlphabetic(edenElement.codePointAt()))) {}
+
+4. Koga treba da se napravi nekoja logika na posledno dodaeniot element vo listata
+   lista.get(lista.size()-1).setItemPrice(cena);
+
+5. Koga sakame da napravime sum(), count() ili max/min operacii, potrebno e da koristime
+ IntStream ili DoubleStream, pa zatoa koristime .mapToInt() ili .mapToDouble()
+ The mapToInt method returns an IntStream, and the sum method is a terminal operation of the IntStream.
+Example:
+int vkNaracki = narackiLista.stream()
+                .mapToInt(ednaNaracka -> ednaNaracka.getItemLista().size())//broj na items vo edna naracka od listata so naracki
+                .sum();
+
+6. The Integer.compare(int a, int y) method:
+-Returns a negative integer if a is less than y.
+-Returns zero if a is equal to y.
+-Returns a positive integer if a is greater than y.
+
+7. Optional Wrapper vrz nekoj objekt
+Naracki najdolgaNaracka = narackiLista.stream()
+                .max(Comparator.naturalOrder()) //max vrakja Optional Wrapper
+                .orElseGet(() -> new Naracki()); //ako ne najdis najgolema naracka, vrati prazna lista
+
+Vezba 6 - CakeShop2
+1. Difference between abstract class and interface
+INTERFACE:
+ - It delineates a set of methods that a class must implement
+ - Can contain abstract methods (w/o a body) or default methods (w/ body) and static methods
+ - Interfaces cannot provide implementation for abstract methods
+ - Can only have static and final fields
+ - A class can implement multiple interfaces
+ USAGE: - if you need to provide a common functionality that can be implemented by multiple classes
+        - to allows different classes to implement the interface independently.
+
+ABSTRACT CLASS:
+ - Serves as a base class that cannot be instantiated
+ - Can contain abstract methods (w/o body) and concrete methods (w/ body)
+ - can have instances, static fields and constants
+ - a class can extend only one abstract class
+ USAGE: - to provide some common functionality to multiple related classes through methods
+        - when there is a common base class that defines a common structure and behavior for its subclasses
+        - to define protected members that should be accessible only within the class and its subclasses
+
+2. Izbegnuvanje na instanceOf() - treba da kreirame getType() metod
+EXAMPLE:
+
+enum Type {
+    CAKE, PIE
+}
+
+
+abstract class Item {
+...
+    abstract Type getType();
+}
+
+class Cake extends Item {
+...
+    @Override
+    Type getType() {
+        return Type.CAKE;
+    }
+}
+
+3. Isklucoci: Nema poenta da fakjame i da frlame isklucoci vo ist line of code
+4. Filtriranje dokolku imame null objects vo listata, t.e prazni
+                .filter(naracka -> Objects.nonNull(naracka))
+                .filter(Objects::nonNull)
+5. Sortiranje:
+    RASTECKI REDOSLED: (this treba da bidi levo, other treba da e desno)
+    OPAGJACKI REDOSLED: (other e levo, this e desno)
+
+6. Broenje naenum types of a class
+    public int vkPies() {
+        return (int) itemLista
+                .stream()
+                .filter(linija -> linija.getType().equals(Type.PIE))
+                .count(); //Broenje na elementi od bilo kakov tip ne mora samo integers
+    }
+
+7.Pecatenje na site elementi vo listata
+        narackiLista
+                .stream()
+                .forEach(naracka -> pw.write(naracka.toString()));
+
+   Pecatenje so prazen red
+        narackiLista
+                   .stream()
+                   .forEach(naracka -> pw.println(naracka.toString()));
+
+8. Koristenje na this. vo konstruktorot - vo sluchajot ne koristime this oti nema 2 variables with the same name, aka the ones passed as arguments
+    public Naracki() {
+            id = -1; //inicijalno id postavuvame
+            itemLista = new ArrayList<>();
+        }
+
+Vezba 6 - Hospital System
+1. Genericki interface: Sekogas mora da se naznaci generikot od kakov tip na objekt e primer
+interface PatientService <T extends Patient>
+
+2. Lambda expression implementacija
+
+3. Collectors.toCollection is used when you want to collect
+the stream elements into a specific type of collection, rather than just a generic List.
+
+4. tipot na objekt od nekoja klasa mora da e comparable, ako se bara sortiranje
+
+Vezba 6 - Canvas
+1. When to use a static method - when you need to create a given object of a class
+EXPLANATION:
+   Static methods are often used for utility functions that perform a task
+   related to the class but do not require an instance of the class.
+EXAMPLE:
+        Canvas canvas = Canvas.generateCanvas("364fbe94 24 ");
+   ***
+   the method generateCanvas() is a utility method that constructs a Canvas object
+   from a string, fitting this pattern well.
+   Bcuz it's static, the method does not require any data or
+   behavior specific to an instance of the class to perform its task
+   Instead, the method can perform its function using only the parameters
+   passed to it and any static variables or methods in the class.
+WHAT IF IT WASN'T STATIC?
+        Canvas canvas = new Canvas();
+        canvas = canvas.generateCanvas("364fbe94 24
+    ***
+    If the generateCanvas method is not static, it will not work the same way
+    because you would need an instance of the Canvas class to call it.
+    This changes the way the method is used and requires you to instantiate
+    a Canvas object before you can call generateCanvas, which is conceptually
+    incorrect since you need the generateCanvas method to create the Canvas
+    instance in the first place.
+
+2. Kreiranje na objekt od interface preku anonimna klasa,
+   bidejki NE E funckiski interface, NE MOZHEME DA ISKORISTIME LAMBDA IZRAZ
+   AKO IMA POKE OD 1 METOD za zamena na anonimnata klasa
+Example:
+    interface IGeo {
+        double getLatitude();
+        double getLongitude();
+    }
+
+    ...
+    ...
+
+    IGeo lokacija = new IGeo() {
+                @Override
+                public double getLatitude() {
+                    return Double.parseDouble(parts[1]);
+                }
+
+                @Override
+                public double getLongitude() {
+                    return Double.parseDouble(parts[2]);
+                }
+            }
+3. Default method vo interface e metod koj ima vo sebe nekakva implementacija
+i se napishe so cel da ne mora da se pravi overide vo klasite koj sho go implementiraat interfejsot
+    default double calculateDistance(IGeo other) {}
+
+4. Frlanje na razlichen tip na isklucoci
+
+Vezba 6 - Line Processor
+1. Konvertiranje na String vo niza od karakteri
+linija.toCharArray()
+
+
+Vezba 6 - TaskScheduledTest ----------------------------------------------------------
+
+1. Zosto ne go postavivme interfejsot na sledniot nacin:
+
+	interface TaskScheduler<Task> { }
+			tuku
+
+	interface TaskScheduler<T extends Task> { }
+
+ANSWER: Without this constraint, <T> could be any type,
+which would not work in the context of the methods defined in the interface.
+Here, <T extends Task> ensures that any implementation of TaskScheduler can rely
+on T being a subtype of Task, providing access to the methods defined in the Task interface.
+Odnosno, sekoja implementacija na TaskScheduler ke ima access do metodite na Task
+
+interface TaskScheduler<T> {
+    List<T> schedule(T[] tasks);
+}
+
+If you were to remove the extends Task constraint, T could be any type,
+not necessarily a subtype of Task. This would make it impossible to call getOrder on T
+without casting or other unsafe operations, defeating the purpose of using generics for type safety.
+
+class TaskRunner<T extends Task> {
+
+    public void run(TaskScheduler<T> scheduler, T[] tasksNiza) {
+        List<T> listOfOrders = scheduler.schedule(tasksNiza);
+
+        listOfOrders.forEach(x -> System.out.println(x));
+ }
+
+T is already constrained by the class declaration class TaskRunner<T extends Task>.
+Meaning the type parameter T is guaranteed to be a subtype of Task within
+the scope of the TaskRunner class, so there is no need to repeat the constraint T extends Task in the method signature
+
+2. Koga da koristam Scanner, BufferedReader ili PrintWriter
+
+Choosing between Scanner, BufferedReader, and PrintWriter in Java depends on your specific needs for reading and writing data. Here’s a breakdown of when to use each:
+
+Scanner
+Use Case: -- Simplifies reading of primitive data types and strings.
+          -- Reading input from the console.
+
+BufferedReader
+Use Case: -- Citanje linija po linija od input
+SEKOGAS ZATVARAJ SO br.close();
+
+PrintWriter
+Use Case: -- Writing formatted text to output streams.
+Example: Vezba 6 --- Mobile Operator
+
+    public void printSalesReport(OutputStream out) {
+        PrintWriter pw = new PrintWriter(out);
+
+        ListOfSalesRep
+                .stream()
+                .sorted(Comparator.reverseOrder()) //vo opagjacki redosled
+                .forEach(edenSalesRep -> pw.println(edenSalesRep));
+
+        pw.flush();
+    }
+
+
+Vezba 6 --- LineProcessor
+** Integer.compare() vrakja:
+(-1) ako argument1 < argument2
+(0) ako argument1 == argument2
+(1) ako argument1 > argument2
+
+***Comparing elements
+*1. Using substraction
+.max((leftString, rightString) -> brojPojavuvanja(leftString, c) - brojPojavuvanja(rightString, c))
+
+*2. Using Integer.compare for Comparison
+.max((leftString, rightString) -> Integer.compare(brojPojavuvanja(leftString, c), brojPojavuvanja(rightString, c)))
+
+Rezultat:
+-ako e pozitivno, leftString ima poke pojavuvanja na bukvata c od rightString
+-ako e negativno, leftString ima pomalce pojavuvanje na bukvata c od rightString
+-ako e 0, ednakvi se
+
+Reshenie za ako dvete se isti:
+---prvo sporeduvame po brojot na pojavuvanja na znakot c, pa potoa ako se isti, gi pecatime po prirodniot redosled vo zadacata
+
+Comparator<String> komparator = Comparator.comparing(linija -> brojPojavuvanja(linija, c));
+
+String result = listOfStrings
+    .stream()
+    .max(komparator.thenComparing(Comparator.naturalOrder()))
+    .orElse(" "); //ako ne najdi takov string vrakja prazen string
+
+
+***Expression kojshto pravi stream od site karakteri vo string-ot
+
+private int brojPojavuvanja(String linijaString, char c) {
+   long result = (int) linijaString
+                        .toLowerCase()
+                        .chars()
+                        .filter(edenKarakter -> ((char) edenKarakter == c))
+                        .count();
+   return result;
+}
+
+Vezba 6 - MobileOperator
+1. Zoshto koristime abstract class? - Bidejki nas ni e dadena osnovnata cena na paketot,
+no kompletnata cena ke zavisi od toa kolku korisnikot ima nadminato nad besplatnite minuti, sms ili gb
+
+abstract class Package {}
+
+2. STATIC PROMENLIVA/VARIABLE
+-Dokolku edna promenliva e ista za sekoja instanca od taa klasa, istata promenliva treba da bide STATIC
+
+3. Double Summary statistics- koga treba da se presmetuva min/max/average
+
+@Override
+public String toString() {
+
+    DoubleSummaryStatistics dss = customerList
+                                            .stream()
+                                            .mapToDouble(edenCustomer -> edenCustomer.vkCena())
+                                            .summaryStatistics();
+
+
+    return String.format("%s Count: %d Min: %.2f Average: %.2f Max: %.2f Comission: %.2f",
+                salesRepID,
+                dss.getCount(),
+                dss.getMin(),
+                dss.getAverage(),
+                dss.getMax(),
+                provizijaNaCustomers);
+    }
+
+4. Handling Exceptions
+~Najdobra praksa e da se kreira poseben metod za da se proveri dali e validen uslovot,
+dokolku ne e validen vo toj slucaj da se frli isklucok
+~Dokolku ne mozhe da se kreira objekt poradi frlanje na isklucok, najdobro e vo Try-Catch Block da vrati null, zaedno so negovata poraka
+ pa potoa koga se formira listata, fa se filtriraat site objekti koi se null
+
+
+Example:
+public static SalesRep kreirajSalesRep(String linija) throws InvalidIDException {
+...
+...
+      if(!isValidID(SalesRepID))
+        {
+            throw new InvalidIDException
+                    (String.format("%s is not a valid sales rep ID", SalesRepID));
+        }
+....
+....
+
+public void readSalesRepData(InputStream is) throws IOException {
+....
+....
+ListOfSalesRep = br
+                .lines()
+                .map(linija -> {
+                    try {
+                        //ako uspesno se kreira objektot od SalesRep klasata, se stava vo Collectors.toList()
+                        return SalesRep.kreirajSalesRep(linija);
+                    } catch (InvalidIDException e) {
+                        //dokolku ne se kreira uspesno nov objekt, t.e se frli isklucok
+                        // ja vrakjame negovata poraka
+                        System.out.println(e.getMessage());
+                        return null; //mora da vratime prazen objekt
+                    }
+                })
+                .filter(Objects::nonNull) //gi filtrirame site objekti koi ne se null
+                .collect(Collectors.toList());
+}
+
+Vezba 6 - Kolok2022 - RiskTester
+1. Sekogas koga ke imame zadaci so InputStream i OutputStream ubavo e da si
+napravime klasi, cij objekt ke se odnesuva na edna linija od input-ot
+
+2. Koga da koristime this.
+Primer: this.attackerList - you are explicitly assigning the value to the instance variable attackerList of the Game class.
+
+3. Koga da koristime .map() ili .mapToInt()
+~ .mapToInt() ni vrakja IntStream, a na toa ne mozime da napravime .collect(),
+   odnosno ne mozime da go soberime stream-ot vo lista od Integers, oti raboti samo so primitivni int types
+   .mapToInt() se koristi koga sakame da presmetame nekakvi statistiki, kako average, sum, min, max
+   odnosno presmetki so primitive int types
+~ vo sluchajot koristime .map() so cel da pretvorime stream od strings vo lista od integers, List<Integers>
+Example:
+    lista = Arrays
+                .stream(half[1].split("\\s+")) //dopolnitelno go delime po prazni mesta
+                .map(ednoFrlanje -> Integer.parseInt(ednoFrlanje))
+                .collect(Collectors.toList());
+
+4. Rabota so IntStream.range() namesto for() ciklus
+
+Vezba 6 - QuizTester
+1. Od niza karakteri pretvarame vo lista
+    static List<String> ALLOWED_ANSWERS = Arrays.asList("A","B","C","D","E");
+2. Proverka dali daden element se naogja vo listata
+     ALLOWED_ANSWERS.contains("B")
+
+3. Koristenje na ternary operator:
+Syntax: condition ? trueExpression : falseExpression
+
+Example:
+    @Override
+    float checkAnswer(String studentAnswer) {
+        return (correctAnswer == Boolean.parseBoolean(studentAnswer)) ? points : 0.0f;
+    }
+
+4. Procenti/ Percentages
+~Namaluvanje za 20% od poenite
+return (points - 0.2f);
+
+Vezba 6 - Rule
+1. Rabota so generic class/genericki klasi
+2. Rabota so Predicate, Function, Optional wrapper
+
+ * Predicate - functional interface koj prima eden argument i vrakja boolean vrednost
+ * Function - generic functional interface koj prima argument od eden tip i vrakja od drug tip
+ * Optional - se koristi so cel da se izbegne NullPointerException in the absence of a value
+
+3. Kako da dobieme max/najgolem element od lista, pri toa da vratime Double
+
+   listOfRules
+           .add(new Rule<>
+           (edenStudent -> edenStudent.grades.size()>=3 , //predicate
+           edenStudent -> edenStudent
+                                     .grades
+                                     .stream()
+                                     .mapToDouble(i -> i) //sekoe brojche se mapira vo double
+                                     .max()
+                                     .getAsDouble())            //function
+                    );
+
+4. Rabota so MapTODouble
+
+Vezba 7 - Finalists
+1. Rabota so klasata Random
+            - pozhelno e istata da bidi static
+            - koga rabotime so .nextInt() the range of values for random is 0,n-1 ili
+            [0,granica), bez granicata, pa za da ja vklucime i granicata pravime
+            [0,granica) + 1 = [1,granica]
+
+Example:    vkBrFinalists = 30
+            int coek = RANDOM.nextInt(vkBrFinalists) ;
+            -> vrednosta na coek ke bidi od 0 do 29
+            int coek = RANDOM.nextInt(vkBrFinalists) + 1;
+            -> vrednosta na coek ke bidi od 1 do 30
+
+Vezba 7 - ArrangeLetters
+1. Pri rabota so Arrays.stream() koristime .collect(Collectors.joining(" ")) so cel da
+   go pretvorime stream-ot na stringovi (niza od stringovi) vo eden celosen string
+   kade sekoj element od nizata, odnosno sekoj string e "spoen" so prazno mesto
+
+2. Rabota so stream od karakteri .chars()
+Example:
+    char capitalLetter = zbor
+                     .chars()
+                     .mapToObj(i -> (char) i) /* sekoja bukva od stream-ot da stane char */
+                     .filter(edenKarakter -> Character.isUpperCase(edenKarakter)) /* gi filtrirame samo Upper Case letters */
+                     .findFirst() /* vrakja Optional, toj e objekt koj mozhe da bidi null ili da vrati nekoja vrednost */
+                     .get(); //go zemame karakterot
+
+Example:
+        String result = zbor
+                .chars() //go konvertira 'zbor' vo IntStream
+                .sorted()//sortirame
+                .mapToObj(edenKarakter -> String.valueOf((char) edenKarakter))
+                /* sekoj karakter od stream-ot .char() go mapirame vo string
+                so toa shto sekoj karakter go pretvara vo char posto neli preth e IntStream
+                a so metodot String.valueOf() se pretvara vo string
+                 */
+                .collect(Collectors.joining()); //go kreirame povtorno zborot
+
+Vezba 8 - CountOccurancesTest
+1. Rabota so kolekcii
+~ Koga imame kolekcija od kolekcii, najdobar operator koga sakame
+da proverime nesto e flatMap, takashto za sekoja kolekcija shto e vnatre
+vo glavnata kolekcija povikuvame nejzin stream, t.e gi dobivame
+site strings koi se sodrzhat vo eden red/kolekcija
+
+Vezba 8 - ReverseList
+Collection e super klasa od koja se izveduvaat List, Set itn..
+Collection pretstavuva interface na najvisoko nivo i e ogranichena so koi raboti mozhe da gi zemime
+Primer, ne mozhime da zemime element koj se naogja na i-th pozicija
+
+vezba 8 - BookCollectionTest
+1. Sporedba na naslov (string) ili cena (float) na dva objekti
+@Override
+    public int compareTo(Book o) {
+
+        /* sporedba na naslovite */
+        int sporedbaNaslovi = this.naslov.compareTo(o.naslov);
+        if (sporedbaNaslovi == 0) {
+            /*sporedba na cenite */
+            return Float.compare(this.cena, o.cena);
+        } else {
+            return sporedbaNaslovi;
+        }
+
+    }
+
+2. .sorted()
+~ .sorted() frla isklucok dokolku objektite koi gi sortirame ne se Comparable, pa zatoa
+Comparator-ot mora da go predademe kako argument vo operatorot .sorted()
+~ po default, ako operatorot nema nikakov argument vo nego, gi sortira objektite po
+defaultniot .compareTo() metod
+~ Koga ke imame veke implementirano nekakov Comparable interface na dadena klasa, potoa
+so stream().sorted() ke se sortiraat spored toj .compareTo() metod, vo zavisnost od toa kako sme go postavile
+
+3. Ne ni e dozvoleno da go implementirame compareTo metodot dvapati, so dva razlicni uslovi za sporeduvanje, pa zatoa
+   sekogas koga imame potreba od 2-3 razlicni komparatori treba da se implementiraat Komparatori
+
+4. so Java8, so pomos na lambda izrazi mozime da deklarirame komparatori vo samata klasa Book
+
+5. Najefikasen nacin:
+final Comparator<Book> titleAndPriceComparator
+            = Comparator.comparing(ednaKniga -> ednaKniga.getNaslov()) //prvo po naslov
+            .thenComparing(oneBook -> oneBook.getCena());//ako se knigite ednakvi, sporedvame po cena
+
+Vezba 8 - SetAndMapIntro
+Difference between list and set:
+FIRST: List: Maintains the order of elements. Items are stored in the order they are added.
+       Set: Does not maintain order. The elements in a set are unordered, so the order of elements can change over time.
+
+SECOND: List: Allows duplicate elements. You can have multiple occurrences of the same item in a list.
+        Set: Does not allow duplicate elements. Each item in a set must be unique. If you try to add a duplicate item to a set, it will be ignored.
+
+THIRD: List: Supports indexing. You can access elements by their index (e.g., list[0]).
+       Set: Does not support indexing. Since sets are unordered, there is no concept of an index. You cannot directly access an element by its position.
+
+1. All about Set
+~ Set ni garantira deka ke imame unique elements, nema duplikati
+
+~ TreeSet se koristi za da gi sortirame elementite spored nekoj Comparator,
+odnosno koga vo zadachata se bara da nema duplikati i da bidat elementite sortirani
+~ vo TreeSet elementite mora da bidat comparable
+~ Kompleksnosta za pristap do eden element e O(log)
+ dodeka kompleksnosta za iteriranje na eden TreeSet e  O(n*logn)
+ ~ dodavanje e O(logn), a brishenje eO(n*logn) posto prvo treba da se najde pa da se izbrishe elementot
+
+~ HashSet se koristi koga vo zadacha se bara da se doadat elementi,
+pri toa kompleknosta da ne nadminuva O(n) za n elementi od pricina shto dodavanjeto na sekoj element
+ke bide so kompleknost O(1), a dodavanjeto na n elementi ke bide O(n)
+Isto taka iteriranje na eden HashSet e so kompleknsot O(n)
+~ Vo HashSet operaciite za dodavanje, brishenje, itn.. imaat kompleknost od O(1), posto nema potreba od nikakva iteracija
+~ Bitno: koga koristime Hash, nemame garancija deka ke se zacuva redosledot na vnesuvanje na elementite
+bidejki istite ke bidat prebrishani
+~ Dokolku se dodavaat int, se redat po natural order.
+No, redosledot kompletno se menuva dokolku dodavame Objects, Stirngs...
+~ HashSet koristi hashCode za da proveruva za duplikati
+
+~ LinkedHashSet se koristi dokolku e bitno da se zacuva redosledot na elementite kako shto bile vneseni
+  no da ne se sortirani elementite
+~ Kompleknosta e O(1), kako obicen HashSet
+
+
+2. All about Map
+~ Map se kolekcija na parovi od kluc i vrednosti
+~ Nema duplikat kluchevi
+~ Se koristat za da se izbroj pojavuvanjeto na nekoj element,
+ ili grupiranje po odreden kriterium
+~ Koristime Map koga vo zadachata se bara da grupirame objekti po nekoj kriterium, vo toj slucaj
+  Key od mapata ke bide kriteriumot po koi gi grupirame, dodeka pak Value ke bide
+  mnozestvo/kolekcija/... od grupiranite vrednosti
+
+~ TreeMap vazno e kluchot/key da bide Comparable (vo sluchajot toa e Integer)
+  Map<Integer, String> treeMap = new TreeMap<>()
+~ Sortiranjeto e spored kluchot, vo rastecki redosled, koristime dokolku sakame da sortirame spored kluch/key
+~ Kompleknosta/Complexity e O(logn) za dodavanje, O(logn) za contains,
+  O(logn) za iteriranje...
+
+~ HashMap se koristi koga ne sakame duplikati, a redosledot ne e biten i sakame najmala vremenska kompleknsot
+  bidejki go izmestuva redosledot na elementite kako shto se vneseni
+~ Elementite shto se vo tip kluc/key na mapata mora da imaat @Override hashCode
+~ Kompleknsota e O(1) za dodavanje, contains, O(n) za iteriranje itn...
+Example: So o(1) go dodavame gradot(String) i so o(1) go dodavame ucesnikot (set<Participant>
+Map<String, Set<Participant>> participantsByCity;
+
+~ LinkedHashMap se koristi za da ne se izgubi redosledot od nacinot na kojshto se vneseni elementite
+~ Complexity the same as LinkedHashSet
+
+ 3. Kompleksnost/Complexity
+ https://simplenotions.wordpress.com/2009/05/13/java-standard-data-structures-big-o-notation/
+ Mozno e na kolokv da ni dadat zadacha so uslov kompleksnosta da ne nadminuva x amount of elements
+
+Vezba 9 - NamesTest
+1. Citanje input from file:
+        InputStream is = new FileInputStream(filePath);
+
+2. String.format() vs .printf vs StringBuilder
+~ Use String.format() when you need to create a formatted string
+without immediately printing it. For example, if you need to store the formatted string
+in a variable, return it from a method, or concatenate it with other strings.
+~ Use System.out.printf() when you need to directly print a formatted string to the console.
+~ Use StringBuilder when you need to efficiently build or concatenate strings in a loop or over multiple steps,
+especially when the string is being modified or appended to frequently
+
+3. .entrySet() ---- returns a set of entries in that Map, t.e mnozestvo od parovi
+Set<Map.Entry<String, Integer>> entrySet = unisexNames.entrySet();
+
+              --- za da sortirame mapa po vrednosti, se koristi gotov komparator
+              --- i dokolku sakame vo obraten redosled da bidat ispechateni
+unisexNames
+        .entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEach()...
+
+Vezba 9 - PhoneBookTest
+1. Koristenje na substring()
+~Begin index e inclusive, pocnuva od i, dodeka pak ending index e exclusive, bez taja vrednost
+ Example: resultLista.add(telBroj.substring(i,i+subStrLen));
+
+Vezba 9 - FileSystemTest
+1. Koristenje na LocalDateTime
+~ *imeto* na mesecot se zema so pomosh na .getMonth().toString()
+
+    public String izdvoiYearAndMonth() {
+
+        return String.format("%s - %s", kreiranoVo.getMonth().toString(), kreiranoVo.getDayOfMonth());
+    }
+
+2. Kreiranje na komparator objekt za nizhenje na sporedbi
+    public int compareTo(File other) {
+        /* Sporedba po datum na kreiranje, pa ime, pa golemina */
+        Comparator<File> komparator =
+                Comparator.comparing((File edenFile) -> edenFile.getKreiranoVo())
+                        .thenComparing((File edenFile) -> edenFile.getIme())
+                        .thenComparing ((File edenFile) -> edenFile.getGolemina());
+
+        return komparator.compare(this, other);
+    }
+
+3. Koristenje na Collector "grouping by" shto e kolektor koj vo sebe ocekuva od 1 do 3 argumenti
+1viot: classifyer koj go odreduva klucot po koj ke gi grupirame vrednostite na novata mapa/kolekcija
+2riot: vo kakov podatochen tip ke gi soberime (set,list,map...) i logikata/presmetkata
+(optional) 3tiot: kakva ke bide mapata shto ke se vrati (po default se vrakja hash map)
+
+Example:
+       return listaOdFiles
+                .stream()
+                .collect(Collectors.groupingBy(
+                        //od sekoj file we extract the year
+                        edenFile -> edenFile.kreiranoVo.getYear(),
+                        //specifirame kakva sakame da ni bide mapata
+                        () -> new TreeMap<>(),
+                        //ke gi soberime vo tree set oti se bara da bidat sortirani
+                        Collectors.toCollection(() -> new TreeSet<>())
+                        )
+                );
+
+~ Koristenje na Collectors.groupingBy za da se presmeta odredena suma
+        return listaOdFiles
+                .stream()
+                .collect(Collectors.groupingBy(
+                        //gi grupira spored mesec i godina
+                        edenFile -> edenFile.izdvoiYearAndMonth(),
+                        //ja presmetuva godinata
+                        Collectors.summingLong(edenFile -> edenFile.getGolemina())
+                ));
+
+Vezba 10 - LabExcercisesTest
+1. Razlika vo .mapToDouble
+
+    public double sumarniPoeniZaEdenStudent() {
+        double result = listaOdPoeni
+                .stream()
+                .mapToDouble(ednaVezba -> ednaVezba)
+                /*In this case, the lambda expression simply returns ednaVezba as is, which works if ednaVezba is already of type double.
+
+                On the other hand,
+                .mapToDouble(ednaVezba -> ednaVezba.doubleValue())
+                is necessary if ednaVezba is an object type (like Double, Integer, etc.) that needs to be unboxed or converted to a primitive double.                */
+                .sum();
+
+        return result/10;
+    }
+
+2. Kako da oddvoish godina od index
+
+    public int godinaNaStudiranje() {
+        return 24 - Integer.parseInt(index.substring(0,2))
+    }
+
+3. .computeIfPresent() metodot updates the value for a given key only if the key is already present in the map
+Syntax:
+    computeIfPresent(Key, BiFunction<Key, Value, NewValue>);
+Key: The key in the map you want to update (in this case, the year of study).
+BiFunction: A function that takes two arguments—the key (key) and the current value (value)—and returns a new value that will replace the current value in the map
+
+4. Dokolku sakas da ispechatis String so nekolku spaces izmegju values:
+        StringBuilder sb = new StringBuilder();
+        sb.append("%2d : Count of messages: %6d\n", redenBroj, setOdPoraki.size());
+
+5. Rabota so StringBuilder, pechatenje na map/set toString
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("%2d : Count of messages: %6d\n", redenBroj, setOdPoraki.size());
+        sb.append("Messages:\n");
+        /*se pechatat site poraki oddeleni so nov red
+        toa go pravime so toa shto sekoj objekt go pretvarame vo negovata toString notacija         */
+        String porakiToString = setOdPoraki
+                .stream()
+                .map(ednaPoraka -> ednaPoraka.toString())
+                //when u want to concatenate all the strings in the stream into a single string, with each original string separated by a newline character
+                .collect(Collectors.joining("\n"));
+
+        sb.append(porakiToString);
+
+        return sb.toString();
+    }
+
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(String.format("Topic:%10s Partitions:%5d\n", topicName, partitionsCount));
+
+            String mapParticiiToString = mapOfPartitions
+                    .values()
+                    .stream()
+                    .map(ednaParticija -> ednaParticija.toString())
+                    .collect(Collectors.joining("\n"));
+
+            sb.append(mapParticiiToString);
+
+            return sb.toString();
+        }
+
+Vezba 11 - Java Threads
+~ Multithread programa sodrzhi dve ili povekje delovi koi mozhat da se izvrshuvaat istovremeno
+~ Sekoj del od programata se narekuva nishka/thread
+~ Koristime threads so cel da go optimizirame kodot t.e da izvrsime nesto vo paralela
+
+~ Vo Java, sekoja nishka koja ke se inicijalizira ke mozi da ima svoi lokalni promenlivi
+do koi ke mozhe da se pristapuva, no istite niski imaat pristap do globalna memorija, pr. static promenlivi
+
+~ Creating threads:
+1. Create a class that extends Thread
+2. Create class that will implement Runnable(interface)
+
+~Glavnata nishka e PSVM koja ja izvrshuva logikata na nashata programa
+
+~Dokolku sakame da se sinhroniziraat/t.e da imaat nekakov redosled
+    public void run() {
+        try {
+            Thread.sleep(numberToPrint*10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(numberToPrint);
+    }
+
+~ Deadlock: a set of processes is deadlock if each process in the set is waiting
+for an event, that only another process in the set can cause
+~ Semaphore: Osigurva deka dadena niska vo daden moment ke pristapi do nekoja zaednicka promenliva
+
+DESGIN PATTERNS
+NOTE: vo snimkite od 2023 Decorator,Strategy,Factory se skoknati oti gi ima na snimkite
+~~ Recepti za kako da napisheme klasi so cel odreden problem da go reshime polesno
+
+Vezba 11 - XMLTest
+1. Composite:(XMLTest/lab8) ovozmozuva kreiranje na nekakva Tree struktura. Kaj sekoe drvo imame root, so opredeleni children
+            Jazlite koi shto nemaat deca se narekuvaat Leafs.
+*Ideata na ovoj design pattern: Da se formira hirearhija na klasi t.s ke imame eden
+    Interface Component koj ke se odnesuva na odreden jazol vo drvoto
+*Od klasata Component imame nasledvanje na 2 klasi:
+    - Leaf - se odnesuva na jazlite koi nemaat deca
+    - Composite - jazlite koi imaat deca, a tie pretstavuvaat niza od komponenti(objekti) od Interface-ot Component
+    bidejki decata mozhat da bidat ili Compoiste(jazli koi samite imaat deca) ili Leafs
+    * Vo Composite gi imame metodite: add(), remove(), getChildren(), execute()
+    * Metodot execute() vo Composite klasata najcesto vklucuva vo sebe nekakvi Recursive calls, bidejki
+    e potrebno istiot da se izvrshi na site deca, na nivnite deca itn...
+
+2. Kako da se ispechatat vrednostite na edna mapa
+@Override
+public String print() {
+   //<student type="redoven" smer="KNI"> Natalija G </student>
+   return String.format ("<%s %s>", tagName,
+              listOfAttributes.
+                .entrySet() //par od key,value
+                .stream()
+                //go mapirame to string
+                .map(edenEntry -> String.format("%s=\"%s"\"", edenEntry.getKey(), edenEntry.getValue()))
+                //gi sobirame so .joining za da gi pechatime to string
+                .collect(Collectors.joining(" ");
+
+}
+
+Vezba 11 - CallTest
+1. State Design Pattern:
+-Se definira State Interface, i vo nego imame nekolku metodi, koi ni pretstavuvaat site
+akcii na premin od edna vo dr sostojba
+-Isto taka imame konkretni klasi za site sostojbi, a vo tie sostojbi gi imame akciite koi
+se prethodno definirani vo interface-ot, pa treba da se implementiraat istite vo konkretnite sostojbi
+-Vo State Pattern, vo samite sostojbi mozhe da chuvame pristap do Instance/Reference do samiot context
+(ili vo zadachata do samiot povik) posto konstantno ke ni se potrebni informacii za (povikot) kako na primer
+vo kolku satot pocnalo cekanjeto itn.....
+-Contextot e samiot povik, a vo Contextot klasata imame referenca kon state/sostojbata, i obratno vo
+ConcreteStates klasata imame reference do contextot(povikot)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================================================================================================================
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================================================================================================================
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================================================================================================================
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Lab1 - BankTester
+1. Kreiranje na immutable klasa
+~Declare the class as final so it can’t be extended.
+~Make all of the fields private so that direct access is not allowed.
+~Don’t provide setter methods for variables.
+~Make all mutable fields final so that a field’s value can be assigned only once.
+
+2. Dokolku e interface se koristi implements, dokolku e klasa (abstract) se koristi extends
+
+3.BARANJE: da go inicijalizirame poleto za opis na "xxx", to vusnost znaci deka vrednosta ne ja
+prenesvame na super konstruktorot, tuku ja inicijalizirame direkno
+
+public FlatAmountProvisionTransaction(long fromId, long toId,String amount, String flatProvision) {
+
+       super(fromId, toId, "FlatAmount", amount);
+       this.flatProvision = flatProvision;
+}
+
+4. Deciding whether to make a class or interface:
+~Dokolku Parsing e interface, ovozmozhuva povekje klasi da go implementiraat.
+A class can implement more than one interface, but CANNOT extend more than one class.
+~Make interface if it has a single static method without any instance variables
+(static means that it can be accessed directly, w/o needing to create an instance/object of a class
+and the operation does not rely on any instance variables, it operates solely on its input)
+
+5. Koristenje na 'super'
+@Override
+    public double getProvision() {
+        /* so cel da se povika .getAmount() metodot od superclass Transcation
+        In this specific case, since getAmount() is not overridden in the FlatPercentProvisionTransaction class,
+        using super.getAmount() is functionally equivalent to just calling getAmount(). */
+        double kolicina = ParseInterface.parseStringToDouble(super.getAmount());
+        return 0;
+    }
+
+6. Array Copying
+
+~ Shallow Copying (Constructor 1) -is useful when you want to ensure that the Bank object
+has its own array that won’t be affected if the original array is modified outside the Bank object
+
+public Bank(String name, Account[] accounts) {
+    this.name = name;
+    this.accounts = new Account[accounts.length];
+    for (int i = 0; i < accounts.length; i++) {
+        this.accounts[i] = accounts[i];
+    }
+    this.totalProvision = 0;
+    this.totalTransfer = 0;
+}
+
+~ Direct Assignment (Constructor 2) - if the array can be modified outside the Bank object,
+changes will also reflect in this.nizaOdSmetki, which could lead to unintended side effects
+
+public Bank(String name, Account accounts[]) {
+        this.bankName = name;
+        this.nizaOdSmetki = accounts;
+        totalProvisionAmount=0;
+        totalTransfersAmount=0;
+    }
+
+Lab 2 - ContactTester
+1. Rabota so nizi: kopiranje na niza vo lista, pa vrakjanje nazad
+public void addEmailContact(String date, String email) {
+
+        ArrayList<Contact> listaOdKontakti = new ArrayList<>(Arrays.asList(nizaOdKontakti));
+        listaOdKontakti.add(new EmailContact(date,email));
+        nizaOdKontakti = listaOdKontakti.toArray(nizaOdKontakti);
+    }
+
+2. Rabota so Arrays.stream()
+public Contact[] getEmailContacts() {
+        return Arrays
+                .stream(nizaOdKontakti)
+                .filter(kontakt -> kontakt.getType().equals("Email"))
+                /*The lambda expression numOfElemInStream -> new Contact[numOfElemInStream] tells .toArray() to create
+                a new Contact[] array of the same size as the number of elements in the stream.  */
+                .toArray(numOfElemInStream -> new Contact[numOfElemInStream]);
+    }
+
+Lab 7 - ChatSystemTest
+1. Proverka dali postoi odreden element vo set - both methods would return the same result
+because they both ultimately check if the username exists in the set.
+However, the second method using contains() is more straightforward and efficient for this purpose
+
+public boolean hasUser(String username) {
+        return setOdKorisnici
+                .stream().anyMatch(korisnik -> korisnik.equals(username));
+    }
+
+public boolean hasUser(String username){
+        return setOdKorisnici.contains(username);
+    }
+
+2. Sortiranje na mapa po vrednosti
+    mapOdChatRooms
+                //returns a set of entries in that Map, t.e mnozestvo od parovi
+                .entrySet()
+                .stream()
+                //sortirame spored komparator t.e soba so najmalku korisnici
+                .sorted
+                        (Map.Entry.comparingByValue //it sorts the entries by values
+                                (Comparator.comparing(chatRoom -> chatRoom.numUsers()))) //the sorting should be done based on the num of users in each room
+                //najdi ja prvata soba so najmalku korisnici
+                .findFirst()
+                //zemi ja
+                .get()
+                //od key,value zemi ja vrednosta
+                .getValue()
+                //dodaj nov korisnik
+                .addUser(username);
+
+

@@ -1,0 +1,53 @@
+3
+MC;Question1;3;E
+MC;Question2;4;E
+TF;Question3;2;false
+3
+D
+B
+false
+1
+
+result:
+Multiple Choice Question
+Multiple Choice Question:
+True/False Question: Question3 Points: 2 Answer: false
+
+3
+MC;Question1;3;E
+MC;Question2;4;E
+TF;Question3;2;false
+3
+D
+B
+false
+2
+
+result:
+1. -0.60
+2. -0.80
+3. 2.00
+Total pts: 0.60
+
+--------------------------------
+5
+MC;Question1;1;A
+TF;Question2;2;true
+TF;Question3;2;false
+TF;Question4;2;true
+MC;Question5;5;H
+5
+A
+false
+true
+true
+C
+1
+
+izlez:
+H is not allowed option for this question
+Multiple Choice Question
+True/False Question: Question3 Points: 2 Answer: false
+True/False Question: Question3 Points: 2 Answer: false
+True/False Question: Question3 Points: 2 Answer: false
+

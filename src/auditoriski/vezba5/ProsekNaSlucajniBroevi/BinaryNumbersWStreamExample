@@ -1,0 +1,69 @@
+package auditoriski.vezba5.ProsekNaSlucajniBroevi;
+
+import java.io.*;
+import java.util.Random;
+import java.util.stream.IntStream;
+
+public class BinaryNumbersWStream {
+
+    //celosnata pateka na fajlot
+    public static final String FILE_NAME = "C:\\Users\\User\\IdeaProjects\\Napredno\\src\\auditoriski\\vezba5\\ProsekNaSlucajniBroevi\\numbersFile";
+
+    private static void generateFile(int n) {
+
+        //ni ovozmozuva zapishuvaje kod vo binarna datoteka
+        try {
+            ObjectOutputStream objectoutputstream = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
+            Random randomObjekt = new Random();
+
+            //mozime for-ciklusot da go zamenime so stream
+            //so .range() kazuvame do kade da iterira
+            //.forEach() kazuva, za sekoja iteracija na i da se napravi taa logika vo {} zagradi
+            //.writeInt() frla isklucok, mora da go fatime so try/catch
+            IntStream.range(0,n)
+                    .forEach( i -> {
+                        int randomBr = randomObjekt.nextInt(1000);
+                        try {
+                            objectoutputstream.writeInt(randomBr);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //no ovaa logika stanuva komplicirana zaradi shto .writeInt() frla isklucok,
+        //pa zatoa mozime samo da prodolzime so obichen for-ciklus
+
+    }
+
+    public static double presmetuvanjeProsek() {
+        int count = 0;
+        double sum = 0.0;
+
+        try {
+            //objectINPUTstream se koristi za citanje od binaren file kojshto go kreiravme so objectOUTPUTstream
+            ObjectInputStream objectinputstream = new ObjectInputStream(new FileInputStream(FILE_NAME));
+
+            //koga ke citame od BinaryFile, nakraj koga ke proba da go procita sledniot red
+            //ke frli end of file exception, sho znaci mora da go prekinime, pred da go procita sledniot red
+            try {
+                while (true) {
+                    int broj = objectinputstream.readInt();
+                    sum = sum + broj;
+                    count++;
+                }
+            } catch (EOFException e) {
+                System.out.println("End of file was reached");
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sum / count;
+    }
+
+}

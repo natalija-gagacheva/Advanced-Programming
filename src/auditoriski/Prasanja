@@ -1,0 +1,68 @@
+Prasanja
+
+Vezba 6 - TaskScheduledTest ----------------------------------------------------------
+
+1. Zosto ne go postavivme interfejsot na sledniot nacin:
+
+	interface TaskScheduler<Task> { }
+			tuku
+
+	interface TaskScheduler<T extends Task> { }
+
+ANSWER: Without this constraint, <T> could be any type,
+which would not work in the context of the methods defined in the interface.
+Here, <T extends Task> ensures that any implementation of TaskScheduler can rely
+on T being a subtype of Task, providing access to the methods defined in the Task interface.
+Odnosno, sekoja implementacija na TaskScheduler ke ima access do metodite na Task
+
+interface TaskScheduler<T> {
+    List<T> schedule(T[] tasks);
+}
+
+If you were to remove the extends Task constraint, T could be any type,
+not necessarily a subtype of Task. This would make it impossible to call getOrder on T
+without casting or other unsafe operations, defeating the purpose of using generics for type safety.
+
+class TaskRunner<T extends Task> {
+
+    public void run(TaskScheduler<T> scheduler, T[] tasksNiza) {
+        List<T> listOfOrders = scheduler.schedule(tasksNiza);
+
+        listOfOrders.forEach(x -> System.out.println(x));
+ }
+
+T is already constrained by the class declaration class TaskRunner<T extends Task>.
+Meaning the type parameter T is guaranteed to be a subtype of Task within
+the scope of the TaskRunner class, so there is no need to repeat the constraint T extends Task in the method signature
+
+2. Koga da koristam Scanner, BufferedReader ili PrintWriter
+
+
+Choosing between Scanner, BufferedReader, and PrintWriter in Java depends on your specific needs for reading and writing data. Here’s a breakdown of when to use each:
+
+Scanner
+Use Case: -- Simplifies reading of primitive data types and strings.
+          -- Reading input from the console.
+
+BufferedReader
+Use Case: -- Citanje linija po linija od input
+
+PrintWriter
+Use Case: -- Writing formatted text to output streams.
+
+
+3. Why is the constructor empty, and the list is initialized inside the constructor?
+
+class LineProcessor {
+
+    List<Linija> listLinija;
+
+    public LineProcessor() {
+        listLinija = new ArrayList<>();
+    }
+}
+
+
+
+
+

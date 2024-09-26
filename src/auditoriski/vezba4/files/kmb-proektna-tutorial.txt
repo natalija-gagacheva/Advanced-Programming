@@ -1,0 +1,89 @@
+1. ipconfig
+
+2. copy/paste od ipconfig
+
+3. se broi kolku ima
+
+4. arp -a
+
+5. prvite 24 bita se za proizvoditelon
+
+6. ipconfig/renew
+
+7. ip adresa na ruterot
+
+8. copy/paste od delo za wifi od ipconfig/all
+
+9. procitaj od prethodnoto
+
+10. postavi gi delo za host na nuli
+
+11. true
+
+12. vidi ip adresi na dns-servers od ipconfig/all
+
+13. vidi na google za dns servers
+
+14. false
+
+15. proveri ovde https://whatismyipaddress.com/
+
+16. proveri na google
+
+17. ipconfig /displaydns
+
+18. od prethodnata napraj copy paste na nekoe
+
+19. ipconfig /flushdns
+
+20. ipconfig
+
+21. ping na default gateway i procitaj od tamu
+
+22. ping wikipedia.org -n 10 -l 50
+
+23. copy paste na prethodnoto
+
+24. procitaj od prethodnoto
+
+25. tracert wikipedia.org
+
+26. c/p na prethodnoto
+
+27. -samo niz edna (robi.com.mk) -za test za najkratok pat(dopisi ovde nesto) -vidi na google za tracert i trite koloni
+
+28. netstat -e
+
+29. c/p na prethodnoto
+
+30. netstat -ano
+
+31. ako e eden ist proces
+
+32. otvori wikipedia na tab, vidi ip adresa na wikipedia i najdi ja taa ip adresa kaj netstat -ano, i posle vasata ip adresa ima :br na porta, procitaj od ovde
+
+33. LISTENING, ESTABLISHED, CLOSE_WAIT - procitaj na internet za ovie
+
+34. TCP, UDP, IP, HTTP, DNS
+ 
+35. netstat -r umbrella 
+
+36. c/p na prethodnoto
+
+37. za ova mozi na internet da se najdi
+
+38. od arp -a vidi ja mac adresata na default gateway
+
+39. c/p od arp -a
+
+40. nslookup wikipedia.org, -Server: procitaj sho ti pisuva
+
+41. 91.198.174.192
+
+42. nslookup -type=NS finki.ukim.mk
+
+43. c/p na prethodnoto
+
+44. nslookup
+
+45. e-lab.finki.ukim.mk

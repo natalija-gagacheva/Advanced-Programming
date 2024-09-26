@@ -1,0 +1,11 @@
+0
+register user1
+register user2
+followFriend user1 user2
+followFriend user1 user2
+register user3
+addRoom room1
+addRoom room2
+print room1
+stop
+
